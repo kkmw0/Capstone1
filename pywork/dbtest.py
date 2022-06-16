@@ -1,4 +1,7 @@
+#-*- coding: utf-8 -*-
+
 from flask import Flask, jsonify
+import json
 import db_connect
 import getbus
 
@@ -12,7 +15,10 @@ def extract_StationList(busNum):
 
     bus = []
     for i in range(len(busInfo)):
-        bus.append(busInfo[i]['stationName'])
+        if busInfo[i]['turnYn'] == 'Y':
+            bus.append({'stationName' : busInfo[i]['stationName'] + u"(회차)"})
+        else:
+            bus.append({'stationName' : busInfo[i]['stationName']})
     return jsonify(bus)
 
 @app.route('/getPredictTime/<StationName>', methods=['GET', 'POST'])
@@ -22,17 +28,23 @@ def extract_PredictTime(StationName):
 
     predictTime = []
     stationID = []
-    result = []
+    result_PredictTime = []
+    result_busNum = []
 
+    getPredict = []
     for i in range(len(busInfo)):
-        predictTime.append(busInfo[i]['predictTime1'] + "min")
+        #predictTime.append(busInfo[i]['predictTime1'] + "min")
         stationID.append(busInfo[i]['routeId'])
 
-    tmp = db_connect.routeID_to_busNum(stationID)
-    for i in range(len(busInfo)):
-        result.append([predictTime[i], tmp[i]])
+    busNum = db_connect.routeID_to_busNum(stationID)
+    for i in range(len(busNum)):
+        getPredict.append({'busNum' : busNum[i] + u'번', 'predictTime' : busInfo[i]['predictTime1'] + u'분'})
+    #getPredict = {'PredictTime' : predictTime, 'busNum' : tmp}
+    return jsonify(getPredict)
 
-    return jsonify(result)
+#    for i in range(len(busInfo)):
+#        result_PredictTime.append(predictTime[i])
+#        result_busNum.append(tmp[i])
 
 @app.route('/getStationList/<StationName>', methods=['GET', 'POST'])
 def extract_stationList(StationName):
@@ -42,6 +54,13 @@ def extract_stationList(StationName):
 @app.route('/getBusList/<busNum>', methods=['GET', 'POST'])
 def extract_busList(busNum):
     result = db_connect.search_Bus(busNum)
+    #result.sort()
+    #busList = dict(zip(range(1, len(result) + 1), result))
+    return jsonify(result)
+
+@app.route('/getBusCurrentPos/<busNum>/<plateNo>', methods=['GET', 'POST'])
+def extract_currentPos(busNum, plateNo):
+    result = db_connect.bus_destination(busNum, plateNo)
     return jsonify(result)
 
 if  __name__ == '__main__':
