@@ -1,7 +1,7 @@
 import requests, xmltodict, json
 import db_connect
 
-key = "T4WmEeuAgyLD6LuyLjyHemjnQaJMLRhciWrVRoaBYwRkP6S64W4ZJuhgJt42DjWFQF%2ByYnzwE8Xl7eiZ2kyRlA%3D%3D"
+key = "Your Private Key"
 
 def bus_stationList(routeID):
     stationList_url = "http://apis.data.go.kr/6410000/busrouteservice/getBusRouteStationList?serviceKey={0}&routeId={1}".format(key, routeID)
