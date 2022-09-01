@@ -8,10 +8,10 @@ urllib3.disable_warnings()
 key = "Your Private Key"
 
 bus_db = pymysql.connect(
-    user = 'admin',
-    passwd = 'kkmw0915!!',
-    host = 'busdb.cukujwnz1i1a.us-west-2.rds.amazonaws.com',
-    db = 'busDB',
+    user = 'Your Id',
+    passwd = 'Your Password',
+    host = 'Your DB endpoint',
+    db = 'DB Name',
     charset='utf8'
 )
 
