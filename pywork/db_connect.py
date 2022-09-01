@@ -5,7 +5,7 @@ import urllib3
 import time
 
 urllib3.disable_warnings()
-key = "T4WmEeuAgyLD6LuyLjyHemjnQaJMLRhciWrVRoaBYwRkP6S64W4ZJuhgJt42DjWFQF%2ByYnzwE8Xl7eiZ2kyRlA%3D%3D"
+key = "Your Private Key"
 
 bus_db = pymysql.connect(
     user = 'admin',
