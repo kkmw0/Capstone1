@@ -64,4 +64,4 @@ def extract_currentPos(busNum, plateNo):
     return jsonify(result)
 
 if  __name__ == '__main__':
-    app.run(host = '172.31.23.80', port = 12345, debug = True)
+    app.run(host = 'Your IP', port = 12345, debug = True)
